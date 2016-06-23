@@ -1,7 +1,8 @@
 ### Docker setup for a Flask Development Environment
 ###### Author: Jonathan Kramer, Circa Victor Software Engineer
+--------------------------
 
-Description and File Structure
+#### Description and File Structure
 --------------------------
 
 We will create 3 different Docker containers for our setup.
@@ -17,7 +18,7 @@ Creates a Flask environment with proper python packages
 
 Now to explain the relationship between these three containers. We mount the volume from **data** when we run **postgres** so that any database operations are persisted. Then, when we run **flask**, we link **postgres** to it so that it can connect appropriately.
 
-Instructions (Step by Step)
+#### Instructions (Step by Step)
 --------------------------
 
 ###### 1. Data-only Container Setup
@@ -40,7 +41,7 @@ Instructions (Step by Step)
 ```
 
 
-Important notes about using Docker
+#### Important notes about using Docker
 --------------------------
 
 
