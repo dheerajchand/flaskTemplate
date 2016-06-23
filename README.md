@@ -24,21 +24,19 @@ First make sure that to have Docker installed on your machine:
 
 Open a Docker Terminal before proceding. 
 
-###### 1. Data-only Container Setup
+##### 1. Data-only Container Setup
 
 We simply need to create the container based on the already existing ubuntu image. There is no need for a separate Dockerfile or further setup, since this container's only function is to maintain the data volume.
 
 ```
 docker create -v /data/db/ --name data_container ubuntu
-
 ```
 
-###### 2. Postgres DB Container Setup
+##### 2. Postgres DB Container Setup
 
 Build the custom postgres image from the appropriate Dockerfile. Something to note about this build is that we use the included postgres.conf file to setup our connection port and a root user and password at (). This can be adjusted if necessary.
 
 ```
-
 
 ```
 
@@ -46,29 +44,36 @@ Now when we run this image to create our container we mount the volume from the 
 We use the -d option to daemonize this process so that we can finish our build.
 
 ```
-docker run -d -p :9895 --volumes-from data_container --name pgdb pgdb-1
-
+docker run -d -p :9895 --volumes-from data_container --name pgdb-1 pgdb
 ```
 
 If we wanted to enter terminal for this container for some reason, run 
+
 ```
 docker attach pgdb-1
+```
+
+##### 3. Flask Application Container Setup
 
 ```
 
-###### 3. Flask Application Container Setup
-
 ```
-
-```
-
 
 ### Important notes about using Docker
 
-
+Containers have the notion of being started and stopped. When we run a container it is started. If we are in the console for a given container and we run `exit`, then this stops the container and brings us back to our local console. If we want to go back to our container, we must first restart the container and then reattach to it.
+```
+docker start container\_name && docker attach container\_name
+```
 
 ### Acknowlegements
 https://learning-continuous-deployment.github.io/docker/images/dockerfile/database/persistence/volumes/linking/container/2015/05/29/docker-and-databases/
 
 Dockerhub
+
+### Authors
+
+Jonathan Kramer
+jonkramer@circavictor.com
+Circa Victor Software Engineer
 
