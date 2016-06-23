@@ -1,8 +1,7 @@
 ### Docker setup for a Flask Development Environment
-	Jonathan Kramer
-	jonkramer@circavictor.com
-	Circa Victor Software Engineer
-	
+##### Jonathan Kramer
+##### Circa Victor Software Engineer
+
 --------------------------
 
 #### Description and File Structure
