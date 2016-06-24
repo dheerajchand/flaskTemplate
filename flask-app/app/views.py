@@ -14,7 +14,8 @@ from functools import wraps
 import requests
 import json
 
-from app import app, User
+from app import app 
+from models import db, User
 
 # ------------------------------------------------------------------------
 #       Decorator to easily protect API routes access
@@ -42,7 +43,7 @@ def home():
   print "Hit home!"
   users = User.query.all()
   print users
-  return "Welcome to circavictor-flask, <strong>%s</strong>!" % users[0].username , 200
+  return "Welcome to circavictor-flask, <strong>%s</strong>!" % users[0].to_json() , 200
 
 @app.route('/api/v1.0/example', methods = ['GET'])
 @custom_decorator
