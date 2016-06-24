@@ -64,11 +64,6 @@ Build our flask image from the appropriate Dockerfile.
 ```
 docker build -f ./Dockerfile-flask -t flask-container .
 ```
-
-Notice that we use -v flag to mount our flask application directory. This makes it so that changes made to our flask application on our host will also be seen within our container. As a result, we can edit our application files using whatever file editor we like that is native to our machine (i.e. Sublime Text, PyCharm) 
-
-Our build will also initially install the basic required libraries for a flask application from the included requirements.txt file
-
 Now to run our new container and if our flask app wants to, we can link to our postgres container.
 
 ```
@@ -76,7 +71,11 @@ docker run -it -v $(pwd)/flask-app:/flask-app -p 5000:5000 --name flask-1 --link
 ```
 We use -p to specify a host and port mapping so that we are able to access the socket our flask app starts from within the container.
 
+Notice that we use -v flag to mount our flask application directory. This makes it so that changes made to our flask application on our host will also be seen within our container. As a result, we can edit our application files using whatever file editor we like that is native to our machine (i.e. Sublime Text, PyCharm) 
+
 Now we are in our flask container's console and have access to our flask-app. We can now develop was we normally would, using a text editor locally and the console to make updates to our requirements.txt and start the server
+
+Our build does NOT automatically install the basic required libraries for a flask application from the included requirements.txt file. This can easily be done with a call to `pip install -r requirements.txt` .
 
 ###### IMPORTANT NOTE FOR OSX
 It is likely you are using Virtual Box as part of the Docker Toolbox in order to use docker on OSX. When we go to access our web app endpoints locally at `localhost:5000` we will get nothing! This is because the Virtual Box adds another linux layer in order to properly run docker, necessitating an IP mapping.
