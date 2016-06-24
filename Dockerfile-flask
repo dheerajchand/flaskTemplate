@@ -1,0 +1,56 @@
+#
+# Ubuntu Dockerfile, with python and postgres/postgris installations
+#
+# https://github.com/dockerfile/ubuntu
+# 
+# Updated by: Jonathan Kramer, 06/22/16
+# 
+
+# Pull base image.
+FROM ubuntu:14.04
+MAINTAINER Jonathan Kramer <jonkramer@circavictor.com>
+
+# Install basic tools
+RUN \
+  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get -y upgrade && \
+  apt-get install -y build-essential && \
+  apt-get install -y software-properties-common && \
+  apt-get install -y byobu curl git htop man unzip vim wget
+
+# Install python packages
+RUN \
+  apt-get install -y python python-dev python-pip python-virtualenv
+
+# Add the PostgreSQL PGP key to verify their Debian packages. + Repo
+# It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+
+# Install postgres related packages
+RUN \
+  apt-get update && \
+  # apt-get -y install postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5
+  apt-get -y -q install postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 postgresql-9.3-postgis-2.0
+
+RUN \
+  apt-get -y update && \
+  apt-get -y remove libpq5 && \
+  apt-get -y libpq-dev
+
+# Clean up apt list
+RUN \
+  rm -rf /var/lib/apt/lists/*
+
+# Set environment variables.
+ENV APP /flask-app
+
+# Define working directory.
+WORKDIR $APP
+
+# install requirements
+# RUN pip install -r $APP/requirements.txt
+
+# Define default command.
+CMD ["bash"]
